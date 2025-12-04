@@ -4,13 +4,11 @@ import MessageInput from '@/components/MessageInput';
 import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
 import { Message, Role } from '@/utils/Interfaces';
-import { keyStorage } from '@/utils/Storage';
+import { buildApiUrl } from '@/utils/api';
 import { FlashList } from '@shopify/flash-list';
-import { Redirect, Stack } from 'expo-router';
-import { useMemo, useState } from 'react';
-import { Image, View, StyleSheet, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { useMMKVString } from 'react-native-mmkv';
-import OpenAI from 'react-native-openai';
+import { Stack } from 'expo-router';
+import { useState } from 'react';
+import { Alert, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
 
 // const dummyMessages = [
 //   {
@@ -24,23 +22,8 @@ import OpenAI from 'react-native-openai';
 
 const Page = () => {
   const [height, setHeight] = useState(0);
-  const [key, setKey] = useMMKVString('apikey', keyStorage);
-  const [organization, setOrganization] = useMMKVString('org', keyStorage);
   const [messages, setMessages] = useState<Message[]>([]);
   const [working, setWorking] = useState(false);
-
-  if (!key || key === '' || !organization || organization === '') {
-    return <Redirect href={'/(auth)/(modal)/settings'} />;
-  }
-
-  const openAI = useMemo(
-    () =>
-      new OpenAI({
-        apiKey: key,
-        organization,
-      }),
-    []
-  );
 
   const onLayout = (event: any) => {
     const { height } = event.nativeEvent.layout;
@@ -49,16 +32,29 @@ const Page = () => {
 
   const getCompletion = async (text: string) => {
     setWorking(true);
-    setMessages([...messages, { role: Role.User, content: text }]);
+    setMessages((prev) => [...prev, { role: Role.User, content: text }]);
 
-    const result = await openAI.image.create({
-      prompt: text,
-    });
-    if (result.data && result.data.length > 0) {
-      const imageUrl = result.data[0].url;
-      setMessages((prev) => [...prev, { role: Role.Bot, content: '', imageUrl, prompt: text }]);
+    try {
+      const response = await fetch(buildApiUrl('/api/images'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: text }),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result?.url) {
+        throw new Error(result?.error ?? 'Failed to generate image');
+      }
+
+      setMessages((prev) => [
+        ...prev,
+        { role: Role.Bot, content: '', imageUrl: result.url, prompt: text },
+      ]);
+    } catch (error: any) {
+      Alert.alert('Image error', error?.message ?? 'Unable to generate an image right now.');
+    } finally {
+      setWorking(false);
     }
-    setWorking(false);
   };
 
   return (

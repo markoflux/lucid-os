@@ -12,8 +12,12 @@ const Page = () => {
   const router = useRouter();
 
   const purchaseDalle = async () => {
+    if (!pack) {
+      Alert.alert('Not available', 'No purchase options are available right now. Please try again.');
+      return;
+    }
     try {
-      await purchasePackage(pack!);
+      await purchasePackage(pack);
       router.dismiss();
     } catch (e) {
       console.error(e);

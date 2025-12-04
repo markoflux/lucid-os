@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Chatgpt",
-    "slug": "chatgpt",
+    "name": "Lucid OS",
+    "slug": "lucid-os",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "chatgpt",
+    "scheme": "lucid-os",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -15,14 +15,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.supersimon.chatgpt"
+      "bundleIdentifier": "com.supersimon.lucidos"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.supersimon.chatgpt"
+      "package": "com.supersimon.lucidos"
     },
     "web": {
       "bundler": "metro",
@@ -30,23 +30,22 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
-      "expo-secure-store",
       [
         "expo-build-properties",
         {
           "android": {
             "minSdkVersion": 24,
-            "compileSdkVersion": 33,
-            "targetSdkVersion": 33,
-            "buildToolsVersion": "33.0.0",
-            "kotlinVersion": "1.6.20"
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "kotlinVersion": "1.9.24"
           },
           "ios": {
-            "deploymentTarget": "15.0"
+            "deploymentTarget": "15.1"
           }
         }
       ],
+      "expo-router",
+      "expo-secure-store",
       [
         "expo-media-library",
         {

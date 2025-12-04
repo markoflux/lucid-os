@@ -15,7 +15,7 @@ npx expo install expo-blur
 npx expo install expo-document-picker
 npx expo install expo-image-picker
 
-npm i react-native-openai
+npm i openai
 npx expo install expo-build-properties 
 npx expo install @shopify/flash-list
 

@@ -14,7 +14,7 @@ Additional features:
 - [Expo SQLite](https://docs.expo.dev/versions/latest/sdk/sqlite-next/) for storing chats and messages
 - [Bottom Sheet](https://ui.gorhom.dev/components/bottom-sheet/) for bottom sheet component
 - [FlashList](https://shopify.github.io/flash-list/) for efficient list rendering
-- [React Native OpenAI](https://github.com/candlefinance/react-native-openai) for streaming
+- OpenAI chat and images proxied through Expo Router API routes (streamed responses)
 - [Image Zoom](https://github.com/likashefqet/react-native-image-zoom) for image zoom component
 - [Shimmer Placeholder](https://github.com/tomzaku/react-native-shimmer-placeholder) for loading placeholders
 

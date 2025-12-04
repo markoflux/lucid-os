@@ -18,7 +18,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { DrawerActions } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { getChats, renameChat } from '@/utils/Database';
-import { useSQLiteContext } from 'expo-sqlite/next';
+import { useSQLiteContext } from 'expo-sqlite';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import { Chat } from '@/utils/Interfaces';
 import * as ContextMenu from 'zeego/context-menu';
